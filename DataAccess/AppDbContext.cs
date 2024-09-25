@@ -14,5 +14,7 @@ namespace KendinInşaEtSonSurumWebApp.DataAccess
         {
 
         }
+
+        //NOT: ASP.NET Identity'nin oluşturduğu tablolar için DbSet eklemeye gerek yok. Çünkü Identity tabloları zaten IdentityDbContext tarafından yönetiliyor. Yani IdentityDbContext<User> sınıfını genişlettiğinde, AspNetUsers, AspNetRoles, AspNetUserRoles gibi tablolar otomatik olarak oluşturulur ve yönetilir.
     }
 }

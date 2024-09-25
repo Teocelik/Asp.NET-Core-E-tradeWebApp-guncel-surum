@@ -1,5 +1,30 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model RegisterViewModel
+
+<div class="container">
+    <h2>Kayıt Ol</h2>
+
+    <form asp-action="Register" method="post">
+        <div class="form-group">
+            <label for="UserName">Kullanıcı Adı</label>
+            <input type="text" id="UserName" name="UserName" class="form-control" asp-for="UserName" required style="width: 300px;" />
+        </div>
+
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <input type="email" id="Email" name="Email" class="form-control" asp-for="Email" required style="width: 300px;" />
+        </div>
+
+        <div class="form-group">
+            <label for="Password">Şifre</label>
+            <input type="password" id="Password" name="Password" class="form-control" asp-for="Password" required style="width: 300px;" />
+        </div>
+
+        <div class="form-group">
+            <label for="ConfirmPassword">Şifreyi Doğrula</label>
+            <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" asp-for="ConfirmPassword" required style="width: 300px;" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Kayıt Ol</button>
+    </form>
+</div>
+
