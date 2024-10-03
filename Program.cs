@@ -14,10 +14,10 @@ builder.Services.AddControllersWithViews();
 //veritabaný baðlantýsýný servis olarak container'a ekleyelim.(DI)
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SQLConnect")));
 
-//
+//Identity kütüphanesi ekleme sonrasý container'a eklenen servis
 builder.Services.AddIdentity<User, IdentityRole>()
-    .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders();
+    .AddEntityFrameworkStores<AppDbContext>() //AppDbContext sýnýfýný belirler.
+                .AddDefaultTokenProviders(); // Parola sýfýrlama, e-posta doðrulama gibi iþlemler için gerekli olan varsayýlan token saðlayýcýlarýný ekler.
 
 
 

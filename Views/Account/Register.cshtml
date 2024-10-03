@@ -4,6 +4,7 @@
     <h2>Kayıt Ol</h2>
 
     <form asp-action="Register" method="post">
+        <div asp-validation-summary="All" class="text-danger"></div> @*ModelState tarafından fırlatılan hataların view'de görünmesini sağlar.*@
         <div class="form-group">
             <label for="UserName">Kullanıcı Adı</label>
             <input type="text" id="UserName" name="UserName" class="form-control" asp-for="UserName" required style="width: 300px;" />
