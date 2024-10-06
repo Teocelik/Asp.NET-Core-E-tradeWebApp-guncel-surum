@@ -33,7 +33,6 @@ namespace KendinInşaEtSonSurumWebApp.Controllers
         }
 
 
-
         [HttpPost]// giriş sayfasında, kullanıcının bilgilerini alır ve kimlik doğrulama işlemlerini yapar.
         public async Task<IActionResult> Login(LoginViewModel model)
         {
@@ -52,7 +51,22 @@ namespace KendinInşaEtSonSurumWebApp.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError(string.Empty, "Giriş başarısız!");
+                else if(result.IsLockedOut)
+                {
+                    ModelState.AddModelError(string.Empty, "Hesap kilitlendi!");
+                }
+                else if(result.IsNotAllowed)
+                {
+                    ModelState.AddModelError(string.Empty, "Giriş izni yok!");
+                }
+                else if(result.RequiresTwoFactor)
+                {
+                    ModelState.AddModelError(string.Empty, "İki adımlı doğrulama yapılmalı!");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Giriş başarısız!");
+                }
             }
             return View(model);
         }
@@ -66,26 +80,27 @@ namespace KendinInşaEtSonSurumWebApp.Controllers
 
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if(ModelState.IsValid)//kullanıcının girdiği bilgilerin formatı doğruysa
+            if (ModelState.IsValid)//kullanıcının girdiği bilgilerin formatı doğruysa..
             {
                 // kullanıcının girdiği bilgilerle yeni bir User nesnesi oluştur.
-                var user = new User { UserName = model.UserName, Email = model.Email};
+                var user = new User { UserName = model.UserName, Email = model.Email };
                 // _userManager nesnesini kullanarak yeni bir kullanıcı oluşturma işlemi yapılıyor.
                 // CreateAsync methodu ile, oluşturulan kullanıcı veri tabanına kaydediliyor.
                 var result = await _userManager.CreateAsync(user, model.Password);
 
-                if(result.Succeeded)// kullanıcı kayıt edilme işlemi başarılıysa..
+                if (result.Succeeded)// kullanıcı kayıt edilme işlemi başarılıysa..
                 {
                     // kayıt olan kullanıcı için oturumu açar
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }
-                foreach(var error in result.Errors)
+                foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
             return View(model);
         }
+    
     }
 }
