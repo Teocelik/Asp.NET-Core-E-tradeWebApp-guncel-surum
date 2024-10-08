@@ -45,7 +45,7 @@ namespace KendinInşaEtSonSurumWebApp.Controllers
 
             if (ModelState.IsValid)//gelen veriler doğru formattaysa (ModelState, form verilerini ve doğrulama durumunu tutan bir nesnedir.) 
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
 
                 if (result.Succeeded)//gelen veriler doğruysa..
                 {

@@ -6,13 +6,13 @@
     <form asp-action="Login" method="post">
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-group">
-            <label for="Email">Email</label>
-            <input type="email" id="Email" name="Email" class="form-control" asp-for="Email" required style="width: 300px;"/>
+            <label for="UserName">Kullanıcı Adı</label>
+            <input type="text" id="UserName" name="UserName" class="form-control" asp-for="UserName" required style="width: 300px;" />
         </div>
 
         <div class="form-group">
             <label for="Password">Şifre</label>
-            <input type="password" id="Password" name="Password" class="form-control" asp-for="Password" required style="width: 300px;"/>
+            <input type="password" id="Password" name="Password" class="form-control" asp-for="Password" required style="width: 300px;" />
         </div>
 
         <div class="form-group form-check">
@@ -29,4 +29,5 @@
         <p>Hesabın yok mu? <a asp-action="Register">Kayıt Ol</a></p>
     </div>
 </div>
+
 
