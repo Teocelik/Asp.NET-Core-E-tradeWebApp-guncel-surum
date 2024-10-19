@@ -1,4 +1,5 @@
 using KendinInşaEtSonSurumWebApp.Models;
+using KendinInşaEtSonSurumWebApp.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -6,16 +7,18 @@ namespace KendinInşaEtSonSurumWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IProductService _productService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IProductService productService)
         {
-            _logger = logger;
+            _productService = productService;
+            
         }
 
         public IActionResult Index()
         {
-            return View();
+            var products = _productService.GetAllProducts();
+            return View(products);
         }
 
         public IActionResult Privacy()

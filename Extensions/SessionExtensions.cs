@@ -15,8 +15,8 @@ namespace KendinInşaEtSonSurumWebApp.Extensions
         }
 
         //Bu method, Belirli string (key("Card")) altında saklanan Json formatındaki veriyi tekrar orjinal hale getirir.
-        // T? daki "?" işaret T türünün null olabileceğini belirtir. Ayrıca olası Null uyarılarının önüne geçmiş oluyor. 
-        public static T? GetObjectFromJson<T>(this ISession session, string key) 
+        // T? daki "?" işaret T türünün null olabileceğini belirtir. Ayrıca olası Null uyarılarının önüne geçmiş oluyor.
+        public static T? GetObjectFromJson<T>(this ISession session, string key)
         {
             //string (key("Card")) altında saklanan nesneyi alır.
             var value = session.GetString(key);
