@@ -1,35 +1,34 @@
 ﻿namespace KendinInşaEtSonSurumWebApp.Models
 {
+    //Sepet ve sepetin işleyişi:
     public class Card
     {
-        //ilk olarak, sepetteki ürünleri tutacağımız bir liste oluşturalım(otomatik özellikli)
+        //İlk olarak otomatik özellikli bir liste oluşturalım.(Bu liste sepetteki ürünleri listeleyecek.
+        //Bir nevi sepetin kendisidir diyebiliriz)
         public List<CardItem> Items { get; set; } = new List<CardItem>();
 
-        //sepete ürün ekleyecek method
+        //Items listesine ürün ekleyecek bir method tasarlayalım(kodlayalım)
+        //Ürünü miktarına göre listeye ekler.
         public void AddItem(Product product, int quantity)
         {
-            //listede suan ekleyeceğimiz ürün var mı? kontrol edelim
+            //Ürünü sepete eklemeden önce, sepete ekleyeceğimiz üründen var mı yok mu kontrol etmemiz lazım.
             var existingItem = Items.FirstOrDefault(p => p.ProductId == product.Id);
 
+            //Eğer sepete ekleyeceğimiz ürün sepette zaten varsa, o ürünün sadece miktarını arttıracağız.
             if(existingItem != null)
             {
                 existingItem.Quantity += quantity;
             }
+            //Sepete ekleyeceğimiz ürün sepette yoksa, yeni bir ürün nesnesi oluşturup sepete ekleyeceğiz.
             else
             {
                 Items.Add(new CardItem
                 {
-                    Product = product,
                     ProductId = product.Id,
-                    Quantity = quantity
+                    Quantity = quantity,
+                    Product = product
                 });
             }
         }
-
-        //Sepetteki toplam tutarını hesaplayan property
-        public decimal TotalPrice => Items.Sum(p => p.Product.Price * p.Quantity);
-
-        //Sepetteki ürün sayısını hesaplayan property
-        public int TotalItemCount => Items.Sum(p => p.Quantity);
     }
 }
