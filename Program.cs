@@ -2,6 +2,7 @@ using KendinInþaEtSonSurumWebApp.DataAccess;
 using KendinInþaEtSonSurumWebApp.DataAccess.Repositories;
 using KendinInþaEtSonSurumWebApp.Models;
 using KendinInþaEtSonSurumWebApp.Services.Concrete;
+using KendinInþaEtSonSurumWebApp.Services.Concretes;
 using KendinInþaEtSonSurumWebApp.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,28 @@ builder.Services.AddIdentity<User, IdentityRole>()
 //IProductServisini container'a ekleyelim
 builder.Services.AddScoped<IRepository<Product>, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICartService, CardService>();
+//
+
+//HttpContextAccessor ile Session(oturum)'dan sepet bilgisini almak için bu servisleri container'a ekledim.
+#region Nasýl çalýþýr ve birbirleriyle olan baðlarý nedir?
+/* 
+   HTTP : Web üzerinden veri iletmek için kullanýlan protokoldür. Ýstemci (client) ile sunucu (server) arasýndaki iletiþimi saðlar.
+   HttpContext : bu nesne, bir HTTP isteði sýrasýnda kullanýlan kullanýcý oturum verilerini, istek/yanýt bilgilerini ve diðer isteðe özel bilgileri içerir.
+
+   IHttpContextAccessor ile HttpContext nesnesine eriþim saðlýyoruz. (Yani kullanýcýnýn istek/yanýt bilgilerine eriþim saðlayabiliyoruz)
+   
+   Problemimiz neydi? : Kullanýcý bilgilerine oturum boyunca eriþmek ve yönetmek.
+   
+   - her istek sýrasýnda veya sayfa yenilemelerde vs. gibi durumlarda kullanýcý verilerini kaybolur.
+   - bu verileri oturumda tutmak ve oturum boyunca eriþmek için ise ISession arayüzünü kullanýyoruz.(Yani, verilere eriþmek için oturumda saklýyoruz)
+     
+ */
+#endregion
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddSession();
+//
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -40,6 +63,9 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+//oturumlarýn çalýþabilmesi için
+app.UseSession();
 
 //gelen isteklerin nasýl karþýlanacaðý yer.!
 app.MapDefaultControllerRoute();

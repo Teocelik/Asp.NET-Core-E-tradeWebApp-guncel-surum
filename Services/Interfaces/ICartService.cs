@@ -4,11 +4,13 @@ namespace KendinInşaEtSonSurumWebApp.Services.Interfaces
 {
     public interface ICartService
     {
-        //Ürünleri listele methodu
+        //Sepetteki ürünleri listeleme methodu
         Card GetCard();
-        //Ürün ekleme methodu
-
-        //Ürün temizleme methodu
-        //Tüm ürürnleri sepetten temizleme methodu
+        //sepete ürün ekleme methodu
+        void AddItemToCard(Product product, int quantity);
+        //sepetten ürün silme methodu
+        void RemoveItem(int id);
+        //Tüm ürünleri sepetten temizleme methodu
+        void ClearCard();
     }
 }

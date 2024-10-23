@@ -30,5 +30,9 @@
                 });
             }
         }
+
+        //Toplam sepet tutarını hesaplayan property
+        public decimal TotalPrice => Items.Sum(i => i.Product.Price * i.Quantity);
+
     }
 }
