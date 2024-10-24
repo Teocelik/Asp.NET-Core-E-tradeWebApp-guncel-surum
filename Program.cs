@@ -29,11 +29,15 @@ builder.Services.AddScoped<ICartService, CardService>();
 //
 
 //HttpContextAccessor ile Session(oturum)'dan sepet bilgisini almak için bu servisleri container'a ekledim.
-#region Nasýl çalýþýr ve birbirleriyle olan baðlarý nedir?
+#region IHttpContextAccessor ile ISession Nasýl çalýþýr ve birbirleriyle olan baðlarý nedir?
 /* 
+   Tanýmlar:
+   --------
    HTTP : Web üzerinden veri iletmek için kullanýlan protokoldür. Ýstemci (client) ile sunucu (server) arasýndaki iletiþimi saðlar.
    HttpContext : bu nesne, bir HTTP isteði sýrasýnda kullanýlan kullanýcý oturum verilerini, istek/yanýt bilgilerini ve diðer isteðe özel bilgileri içerir.
 
+   iþleyiþ mantýðý:
+   ---------------
    IHttpContextAccessor ile HttpContext nesnesine eriþim saðlýyoruz. (Yani kullanýcýnýn istek/yanýt bilgilerine eriþim saðlayabiliyoruz)
    
    Problemimiz neydi? : Kullanýcý bilgilerine oturum boyunca eriþmek ve yönetmek.

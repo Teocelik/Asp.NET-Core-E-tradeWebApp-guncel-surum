@@ -77,7 +77,7 @@ namespace KendinInşaEtSonSurumWebApp.Controllers
             return View();
         }
 
-
+        [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)//kullanıcının girdiği bilgilerin formatı doğruysa..
