@@ -23,17 +23,17 @@ namespace KendinInşaEtSonSurumWebApp.Services.Concretes
 
         }
 
-        public void AddItem(Product product, int quantity)
+        public void Add(Product product, int quantity)
         {
             throw new NotImplementedException();
         }
 
-        public void ClearCard()
+        public void Clear()
         {
             throw new NotImplementedException();
         }
 
-        public Card GetCard()
+        public Card Get()
         {
             //ISession arayüzünü, nesneleri oturumda Json formatında saklaması ve tekrar orjinal hale 
             //Dönüştürmesi için genişletmiştik.(SessionExtensions) (Yani ISession arayüzüne yeni methodlar eklemiştik)
@@ -45,7 +45,7 @@ namespace KendinInşaEtSonSurumWebApp.Services.Concretes
             return card;
         }
 
-        public void RemoveItem(int id)
+        public void Remove(int id)
         {
             throw new NotImplementedException();
         }

@@ -25,7 +25,7 @@ builder.Services.AddIdentity<User, IdentityRole>()
 //IProductServisini container'a ekleyelim
 builder.Services.AddScoped<IRepository<Product>, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<ICartService, CardService>();
+builder.Services.AddScoped<ICardService, CardService>();
 //
 
 //HttpContextAccessor ile Session(oturum)'dan sepet bilgisini almak için bu servisleri container'a ekledim.
