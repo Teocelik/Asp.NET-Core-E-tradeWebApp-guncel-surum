@@ -2,12 +2,12 @@
 
 namespace KendinInşaEtSonSurumWebApp.Services.Interfaces
 {
-    public interface ICartService
+    public interface ICardService
     {
         //Sepetteki ürünleri listeleme methodu
         Card GetCard();
         //sepete ürün ekleme methodu
-        void AddItemToCard(Product product, int quantity);
+        void AddItem(Product product, int quantity);
         //sepetten ürün silme methodu
         void RemoveItem(int id);
         //Tüm ürünleri sepetten temizleme methodu

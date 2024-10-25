@@ -4,7 +4,7 @@ using KendinInşaEtSonSurumWebApp.Services.Interfaces;
 
 namespace KendinInşaEtSonSurumWebApp.Services.Concretes
 {
-    public class CardService : ICartService
+    public class CardService : ICardService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ISession _session;
@@ -16,14 +16,14 @@ namespace KendinInşaEtSonSurumWebApp.Services.Concretes
             _httpContextAccessor = httpContextAccessor;
 
             //Burada, kullanıcıya ait oturumda ve oturum boyunca saklanan verilere eişim sağladım.
-            // httpContextAccessor ile HttpContext'e yani kullanıcı bilgilerine eriştik.
+            // httpContextAccessor ile HttpContext'e (yani kullanıcı bilgilerine) eriştim.
             //HttpContext ile session(oturum)'a erişim sağladım. Bu, oturumdaki verileri yönetmek ve erişmek için kullanılır.
             //Yani, oturumda veri saklamak, okumak veya güncellemek için bu nesneyi kullanabiliriz.
             _session = httpContextAccessor.HttpContext.Session;
 
         }
 
-        public void AddItemToCard(Product product, int quantity)
+        public void AddItem(Product product, int quantity)
         {
             throw new NotImplementedException();
         }
