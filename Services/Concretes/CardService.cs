@@ -25,12 +25,24 @@ namespace KendinInşaEtSonSurumWebApp.Services.Concretes
 
         public void Add(Product product, int quantity)
         {
-            throw new NotImplementedException();
+            //ilk olarak, sepet listesinin içinde bulunduğu Card class'ını çağıralım.
+            var card = Get();
+
+            //Card class'ının içinde bulunduğu ürün ekleme methodunu(AddItem) kullanarak yeni ürünü ekleyelim.
+            card.AddItem(product, quantity);
+
+            //son olarak, yaptığımız değişiklikleri oturuma kaydedelim.(Json formatında saklıyoruz)
+            _session.SetObjectFromJson("Card", card);// key: "Card", value : card
         }
 
         public void Clear()
         {
-            throw new NotImplementedException();
+            //ilk olarak sepeti çağıralım.
+            var card = Get();
+            //Sepetin içindeki ürünleri silelim
+            card.Items.Clear();
+            //yaptığımız değişiklikleri oturuma kaydedelim
+            _session.SetObjectFromJson("Card", card);
         }
 
         public Card Get()
@@ -47,7 +59,12 @@ namespace KendinInşaEtSonSurumWebApp.Services.Concretes
 
         public void Remove(int id)
         {
-            throw new NotImplementedException();
+            //belirli bir ürünü silmek için, ilk olarak sepeti çağıralım.
+            var card = Get();
+            //ürünü silelim.
+            card.Remove(id);
+            //Yaptığımız değişiklikleri oturuma kaydedelim.
+            _session.SetObjectFromJson("Card", card);
         }
     }
 }

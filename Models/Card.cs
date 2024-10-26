@@ -8,7 +8,7 @@
         public List<CardItem> Items { get; set; } = new List<CardItem>();
 
         //Items listesine ürün ekleyecek bir method tasarlayalım(kodlayalım)
-        //Ürünü miktarına göre listeye ekler.
+        //Bu method, Ürünü miktarına göre listeye ekler.
         public void AddItem(Product product, int quantity)
         {
             //Ürünü sepete eklemeden önce, sepete ekleyeceğimiz üründen var mı yok mu kontrol etmemiz lazım.
@@ -28,6 +28,18 @@
                     Quantity = quantity,
                     Product = product
                 });
+            }
+        }
+
+        //ürünü id'ye göre silen metod
+        public void Remove(int productId)
+        {
+            //ürünü belirleyelim.
+            var item = Items.FirstOrDefault(item => item.ProductId == productId);
+            //belirlediğimiz ürünü silelim
+            if(item != null)
+            {
+                Items.Remove(item);
             }
         }
 
