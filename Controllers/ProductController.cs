@@ -18,7 +18,7 @@ namespace KendinInşaEtSonSurumWebApp.Controllers
             return View(products);
         }
 
-        public IActionResult ProductDetails(int id)
+        public IActionResult Details(int id)
         {
             var product = _productService.GetProductById(id);
             return View(product);

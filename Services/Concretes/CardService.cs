@@ -12,12 +12,14 @@ namespace KendinInşaEtSonSurumWebApp.Services.Concretes
         public CardService(IHttpContextAccessor httpContextAccessor)
         {
             //Burada, HttpContext'e erişim sağladım.
-            //HttpContext, HTTP isteği ile ilgili bilgilere (örneğin, istek başlıkları, kullanıcı, oturum vb.) erişim sağlar.
+            //HttpContext, HTTP isteği ile ilgili bilgilere
+            //(örneğin, istek başlıkları, kullanıcı, oturum vb.) erişim sağlar.
             _httpContextAccessor = httpContextAccessor;
 
             //Burada, kullanıcıya ait oturumda ve oturum boyunca saklanan verilere eişim sağladım.
             // httpContextAccessor ile HttpContext'e (yani kullanıcı bilgilerine) eriştim.
-            //HttpContext ile session(oturum)'a erişim sağladım. Bu, oturumdaki verileri yönetmek ve erişmek için kullanılır.
+            //HttpContext ile session(oturum)'a erişim sağladım. Bu, oturumdaki verileri yönetmek
+            //ve erişmek için kullanılır.
             //Yani, oturumda veri saklamak, okumak veya güncellemek için bu nesneyi kullanabiliriz.
             _session = httpContextAccessor.HttpContext.Session;
 
@@ -44,15 +46,16 @@ namespace KendinInşaEtSonSurumWebApp.Services.Concretes
             //yaptığımız değişiklikleri oturuma kaydedelim
             _session.SetObjectFromJson("Card", card);
         }
-
+        
         public Card Get()
         {
             //ISession arayüzünü, nesneleri oturumda Json formatında saklaması ve tekrar orjinal hale 
-            //Dönüştürmesi için genişletmiştik.(SessionExtensions) (Yani ISession arayüzüne yeni methodlar eklemiştik)
+            //dönüştürmesi için genişletmiştik.(SessionExtensions)
 
             //Bu methodda, ilk olarak oturumda saklanılan sepet bilgisini alalım.
-            //Nasıl yapacağız? : sepetteki ürünler oturumda Json formatında saklıyorduk(genişletme metodu ile(SetObjectAsJson)).
-            //Şimdi bu ürünleri orjinal hallerine(nesneye) dönüştürerek sepette listeleyeceğiz.
+            //Nasıl yapacağız? : sepetteki ürünleri oturumda
+            //Json formatında saklıyorduk(genişletme metodu ile(SetObjectAsJson)).
+            //Şimdi bu ürünleri orjinal hallerine(nesneye) dönüştürerek çağıracağız.
             var card = _session.GetObjectFromJson<Card>("Card") ?? new Card();
             return card;
         }
