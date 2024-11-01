@@ -28,9 +28,7 @@ namespace KendinInşaEtSonSurumWebApp.DataAccess.Repositories
 
         public Product GetById(int id)
         {
-            var products = _appDbContext.Products.ToList();
-            var product = products.FirstOrDefault(p => p.Id == id);
-            return product;
+            return _appDbContext.Products.FirstOrDefault(p => p.Id == id);
         }
 
         public void Update(Product entity)

@@ -27,10 +27,11 @@ namespace KendinInşaEtSonSurumWebApp.Services.Concretes
 
         public void Add(Product product, int quantity)
         {
-            //ilk olarak, sepet listesinin içinde bulunduğu Card class'ını çağıralım.
+            //ilk olarak, sepeti listeleyen methodu çağıralım.
             var card = Get();
 
-            //Card class'ının içinde bulunduğu ürün ekleme methodunu(AddItem) kullanarak yeni ürünü ekleyelim.
+            //Card class'ının içinde yapılandırdığımız ürün ekleme methodunu(AddItem)
+            //kullanarak sepete yeni ürünü ekleyelim.
             card.AddItem(product, quantity);
 
             //son olarak, yaptığımız değişiklikleri oturuma kaydedelim.(Json formatında saklıyoruz)
@@ -64,7 +65,7 @@ namespace KendinInşaEtSonSurumWebApp.Services.Concretes
         {
             //belirli bir ürünü silmek için, ilk olarak sepeti çağıralım.
             var card = Get();
-            //ürünü silelim.
+            //id üzerinden ürünü silelim.
             card.Remove(id);
             //Yaptığımız değişiklikleri oturuma kaydedelim.
             _session.SetObjectFromJson("Card", card);

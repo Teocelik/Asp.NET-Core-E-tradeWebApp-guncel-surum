@@ -16,23 +16,14 @@
             <p><strong>Description:</strong> @Model.Description</p>
             <p><strong>Category:</strong> @Model.Category</p>
             <p><strong>Rating:</strong> @Model.RatingRate (from @Model.RatingCount reviews)</p>
-            @if (isAdmin)
-            {
+            
+            <form asp-controller="Card" asp-action="Add" method="post">
+                <input type="hidden" name="productId" value="@Model.Id" />
+                <input type="hidden" name="quantity" value="1" />
                 <div class="btn-group" role="group">
-                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+                    <button type="submit" class="btn btn-success">Sepete ekle</button>
                 </div>
-            }
-            else
-            {
-                <form asp-controller="Cart" asp-action="Index" method="post">
-                    <input type="hidden" name="productId" value="@Model.Id" />
-                    <input type="hidden" name="quantity" value="1" />
-                    <div class="btn-group" role="group">
-                        <button type="submit" class="btn btn-success">Sepete ekle</button>
-                    </div>
-                </form>
-            }
+            </form>
             <a asp-action="Index" class="btn btn-secondary">Anasayfa</a>
         </div>
     </div>
