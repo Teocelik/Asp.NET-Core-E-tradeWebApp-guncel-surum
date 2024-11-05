@@ -6,6 +6,7 @@ using KendinInþaEtSonSurumWebApp.Services.Concretes;
 using KendinInþaEtSonSurumWebApp.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,14 @@ builder.Services.AddScoped<IRepository<Product>, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICardService, CardService>();
 //
+
+
+//appsettings.json dosyasýna eklediðiniz publishable key ve secret key'e eriþebilmek için
+//oluþturduðumuz StripeSettings sýnýfýný yapýlandýralým.
+
+//Buradaki konfigürasyon, appsettings.json dosyasýndaki secret ve publishable key'i
+//StripeSettings class'ýna geçirir.
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
 //HttpContextAccessor ile Session(oturum)'dan sepet bilgisini almak için bu servisleri container'a ekledim.
 #region IHttpContextAccessor ile ISession Nasýl çalýþýr ve birbirleriyle olan baðlarý nedir?
