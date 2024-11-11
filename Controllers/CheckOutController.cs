@@ -18,57 +18,97 @@ namespace KendinInşaEtSonSurumWebApp.Controllers
         public CheckOutController(IOptions<StripeSettings> options)//IOptions arabiribi ile stripeSettings ayarlarına erişim sağladım.
         {
             _stripeSettings = options.Value;
-            
         }
 
 
 
         public IActionResult CheckOut()
         {
-            //ilk olarak, secretKey anahtarımızı alalım.
-            //SecretKey: ödeme formuna erişim ve doğrulama için gereklidir.
-            //ödeme işlemleri yapabilmek için SecretKey'i yapılandıralım.
+            //bu metodun amacı: Stripe checkOut oturmunu başlatmak ve sepet bilgisini stripe ödeme formuna taşımak ve ödeme işlemlerini tamamlamak.
+
+            //*yapılacaklar:
+            //-------------
+
+            //Stripe checkOut formuna erişmek ve ödeme doğrulamak için SecretKey anahtarını yapılandıralım.
             StripeConfiguration.ApiKey = _stripeSettings.SecretKey;
 
-            //Oturumda sakladığımız Sepet bilgilerine erişelim.
+            //Oturumda sakladığımız sepet bilgisine erişelim
             var card = HttpContext.Session.GetObjectFromJson<Models.Card>("Card");
 
-            //Sepetimizde ürün var mı kontrol edelim.
-            if(card != null || !card.Items.Any())
+            //Sepette ürün var mı bilgisini kontrol edelim
+            if(card == null || !card.Items.Any())
             {
-                ViewBag.ErrorMessage = "Sepetiniz şuan boş!";
+                //mesaj
+                ViewBag.ErrorMessage = "Sepetinizde şuan boş!";
                 return View("EmptyCard");
             }
 
-            //Projemizin üzerinde çalıştığı domain(alan)'i alalım.
-            //Bu, kullanıcı başarılı veya başarısız bir ödeme gerçekleştirdiğinde
-            //geri yönlendirileceği URL'leri oluşturmak için kullanacağız.
+            //sepetin dolu olması halinde..
 
+            //ilk olarak ödemenin başarılı veya başarısız durumunda kullanacağımız
+            //ve bizi yönlendirecek alanı(domain) tamımlayalım
             var domain = "https://localhost:44324/";
 
-            //ödeme oturumunu ayarlarını oluşturalım(SessionCreateOptions):
-            //SessionCreateOptions: tüm oturum ayarlarını topluca yapılandırmamızı sağlar.
+            //Stripe CheckOut oturum ayarlarını yapılandıralım(SessionCreateOptions nesnesi)
             var options = new SessionCreateOptions
             {
-                //Ödeme yöntemi seçelim(burada sadece kredi kartı ile ödeme ekledim)
+                //Ödeme yöntemini ayarlayalım
                 PaymentMethodTypes = new List<string> { "card" },
 
-                //SessionLineItemOptions nesnesi, Stripe Checkout oturumundaki bir satır öğesini temsil eder.
-                //Yani SessionLineItemOptions nesnesi, Stripe CheckOut oturumunda her bir ürünü ve onun fiyatını içerir.
+                //Ödeme oturumunda yer alacak ürün özelliklerinin yapılanması için
+                //SessionLineItemOptions nesnesini kullandım.
                 LineItems = new List<SessionLineItemOptions>(),
 
-                //ödeme işleminin nasıl ve hangi ortamda yapılacağını belirtelim.
-                //Tek seferlik ödeme için Mode yapılanması..
+                //ödeme modunu yapılandıralım
+                //Burada tek seferlik ödeme için payment modunu seçtim
                 Mode = "payment",
 
-                //Ödeme başarılı olduğunda yönlendirilecek url
+                //Ödeme başarılı olduğunda yönlendirileceğimiz URL
                 SuccessUrl = domain + "CheckOut/OrderConfirmation",
 
-                //Ödeme başarısız olduğu durumda yönlendirileceğimiz url
+                //Ödeme başarısız olduğunda yönlendirileceğimiz URL
                 CancelUrl = domain + "CheckOut/Login"
-
             };
-            return View();
+
+            //Sepetimizdeki her bir ürünü LineItems listesine eklemek için döngü kullanalım.
+            foreach(var item in card.Items)
+            {
+                //ürün özelliklerini yapılandıralım
+                var sessionLineItem = new SessionLineItemOptions
+                {
+                    //ürün bilgilerini atayalım
+                    PriceData = new SessionLineItemPriceDataOptions
+                    {
+                        //ürün fiyatı(kurış bazından belirledim)
+                        UnitAmount = (long)(item.Product.Price * 100),
+                        //para birimi
+                        Currency = "usd",
+                        //ürün ismi vs
+                        ProductData = new SessionLineItemPriceDataProductDataOptions
+                        {
+                            Name = item.Product.Title,
+                        },
+                    },
+                    //ürün miktarı
+                    Quantity = item.Quantity,
+                };
+                //ürünü LineItems'e ekle
+                options.LineItems.Add(sessionLineItem);
+            }
+
+            //Stripe oturumunu oluşturulalım
+            var service = new SessionService();
+            //yaptığımız ayarları oturuma verelim
+            Session session = service.Create(options);
+
+            /*Ödeme sayfasına erişmek için Http yanıt başlığına 
+            stripe url'sini ekleyelim(Bu bizi stripe ödeme sayfasına
+            yönlendirecek url'yi http başlık kısmına ekler)*/
+            Response.Headers.Append("Location", session.Url);
+
+            //Bu bizi stripe ödeme sayfasına yönlendirecek
+            return new StatusCodeResult(303);
+
         }
     }
 }

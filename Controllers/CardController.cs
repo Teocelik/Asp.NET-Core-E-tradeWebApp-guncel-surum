@@ -32,5 +32,10 @@ namespace KendinInşaEtSonSurumWebApp.Controllers
             }
             return RedirectToAction("Details", "Product", new {id = productId});
         }
+
+        public IActionResult CheckOut()
+        {
+            return RedirectToAction("CheckOut", "CheckOut");
+        }
     }
 }
