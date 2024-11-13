@@ -101,6 +101,9 @@ namespace KendinInşaEtSonSurumWebApp.Controllers
             //yaptığımız ayarları oturuma verelim
             Session session = service.Create(options);
 
+            //OrderConfirmation methodunda ödeme işleminin doğrulama sürecini kontrol etmek ve kullanıcıya doğru bilgi sunmak için oturum id'sini saklayalım
+            HttpContext.Session.SetString("SessionId", session.Id);
+
             /*Ödeme sayfasına erişmek için Http yanıt başlığına 
             stripe url'sini ekleyelim(Bu bizi stripe ödeme sayfasına
             yönlendirecek url'yi http başlık kısmına ekler)*/
@@ -108,7 +111,35 @@ namespace KendinInşaEtSonSurumWebApp.Controllers
 
             //Bu bizi stripe ödeme sayfasına yönlendirecek
             return new StatusCodeResult(303);
+        }
 
+        public IActionResult OrderConfirmation()
+        {
+            //ilk olarak oturumumuzun id'sini alalım(ödeme işlem bilgilerine erişmek için)
+            var sessionId = HttpContext.Session.GetString("SessionId");
+
+            if (string.IsNullOrEmpty(sessionId))
+            {
+                return View("Login");
+            }
+
+            // yeni bir oturum servisi oluşturalım
+            var service = new SessionService();
+
+            //yeni oturum servisine oturumumuzun bilgilerini verelim.
+            //Bu, Stripe üzerinden oturum bilgilerimize erişmemizi sağlar.
+            var session = service.Get(sessionId);
+
+            //ödeme başarılı ise..
+            if (session.PaymentStatus == "paid")
+            {
+                return View("Success");
+            }
+            //değilse..
+            else
+            {
+                return View("Login");
+            }
         }
     }
 }
