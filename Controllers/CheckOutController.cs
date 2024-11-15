@@ -2,6 +2,7 @@
 using KendinInşaEtSonSurumWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Stripe;
 using Stripe.Checkout;
 using static System.Net.WebRequestMethods;
@@ -141,5 +142,7 @@ namespace KendinInşaEtSonSurumWebApp.Controllers
                 return View("Login");
             }
         }
+
+
     }
 }
