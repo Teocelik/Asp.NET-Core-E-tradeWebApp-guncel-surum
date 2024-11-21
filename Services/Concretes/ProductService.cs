@@ -15,8 +15,8 @@ namespace KendinInşaEtSonSurumWebApp.Services.Concrete
 
         public void AddProduct(Product entity)
         {
-            
-            throw new NotImplementedException();
+
+            _productRepository.Add(entity);
         }
 
         public void DeleteProduct(int id)

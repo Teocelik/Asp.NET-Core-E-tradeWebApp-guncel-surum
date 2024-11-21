@@ -13,12 +13,12 @@ namespace KendinInşaEtSonSurumWebApp.DataAccess.Repositories
 
         public void Add(Product entity)
         {
-            throw new NotImplementedException();
+            _appDbContext.Products.Add(entity);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            _appDbContext.Remove(id);
         }
 
         public List<Product> GetAll()
@@ -33,7 +33,7 @@ namespace KendinInşaEtSonSurumWebApp.DataAccess.Repositories
 
         public void Update(Product entity)
         {
-            throw new NotImplementedException();
+            _appDbContext.Update(entity);
         }
     }
 }
