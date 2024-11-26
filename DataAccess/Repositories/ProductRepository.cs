@@ -34,6 +34,7 @@ namespace KendinInşaEtSonSurumWebApp.DataAccess.Repositories
         public void Update(Product entity)
         {
             _appDbContext.Update(entity);
+            _appDbContext.SaveChanges();
         }
     }
 }

@@ -36,7 +36,7 @@ namespace KendinInşaEtSonSurumWebApp.Services.Concrete
 
         public void UpdateProduct(Product entity)
         {
-            throw new NotImplementedException();
+            _productRepository.Update(entity);
         }
     }
 }
