@@ -7,11 +7,13 @@ namespace KendinInşaEtSonSurumWebApp.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<User> _userManager; //Kullanıcı oluşturma, güncelleme, parola sıfırlama,
-                                                         //rol atama gibi işlemleri yapmamızı sağlar.
+        /*Kullanıcı oluşturma, güncelleme, parola sıfırlama,
+            rol atama gibi işlemleri yapmamızı sağlar.*/
+        private readonly UserManager<User> _userManager;
 
-        private readonly SignInManager<User> _signInManager; //Kullanıcıların giriş işlemlerini yönetir. Giriş yapma,
-                                                             //çıkış yapma, iki faktörlü kimlik doğrulama gibi işlemleri içerir.
+        /*Kullanıcıların giriş işlemlerini yönetir. Giriş yapma,
+           çıkış yapma, iki faktörlü kimlik doğrulama gibi işlemleri içerir.*/
+        private readonly SignInManager<User> _signInManager; 
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
@@ -51,15 +53,15 @@ namespace KendinInşaEtSonSurumWebApp.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
-                else if(result.IsLockedOut)
+                if(result.IsLockedOut)
                 {
                     ModelState.AddModelError(string.Empty, "Hesap kilitlendi!");
                 }
-                else if(result.IsNotAllowed)
+                if(result.IsNotAllowed)
                 {
                     ModelState.AddModelError(string.Empty, "Giriş izni yok!");
                 }
-                else if(result.RequiresTwoFactor)
+                if(result.RequiresTwoFactor)
                 {
                     ModelState.AddModelError(string.Empty, "İki adımlı doğrulama yapılmalı!");
                 }

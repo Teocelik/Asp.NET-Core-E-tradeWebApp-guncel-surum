@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KendinInşaEtSonSurumWebApp.DataAccess
 {
-    public class AppDbContext: IdentityDbContext<User>
+    public class AppDbContext: IdentityDbContext
     {
         //veritabanı tablosuna karşılık gelen bir DbSet oluştur!
         public DbSet<Product> Products { get; set; }
