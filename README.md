@@ -64,7 +64,22 @@ Bu proje, kullanıcıların ürünleri kolayca listelemesini, sepete eklemesini 
 
 4. **📦 Sipariş Takibi**  
    - Kullanıcılar tamamladıkları siparişleri geçmiş siparişler olarak inceleyebilirler.  
-   - Sipariş detayları kullanıcıya ait bilgilerle birlikte saklanır.  
+   - Sipariş detayları kullanıcıya ait bilgilerle birlikte saklanır.
+     
+
+   ## Proje Görselleri
+  
+   - ![image](https://github.com/user-attachments/assets/a96bffdb-75d1-461a-97ad-9ed9751486dd)
+  
+   - ![ETicaretProjeGorsel2](https://github.com/user-attachments/assets/bedb62a0-f770-4735-970b-1a0a6c9021b1)
+  
+   - ![ETicaretProjeGorsel3](https://github.com/user-attachments/assets/34cf0082-5ce5-4a34-98d9-4e11351ef0ef)
+  
+   - ![image](https://github.com/user-attachments/assets/fa184de1-6044-4526-a069-21fc713fccfe)
+
+
+
+
 
 ## 📜 Lisans
 
